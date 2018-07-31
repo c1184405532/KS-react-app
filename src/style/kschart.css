@@ -1,0 +1,109 @@
+.mdiv{
+    width: 100%;
+      margin:auto;
+      position: relative;
+      height: 100%;
+  }
+  .mdiv th{
+      font-size: 10px !important;
+      font-weight: normal  !important;
+  }
+  .zst-content{
+      width: 100%;
+  }
+  .mdiv td{
+      font-size: 10px !important;font-weight: normal  !important;
+  }
+  .zst-content{
+      float: left;
+      overflow: auto;
+  }
+  .mtable{
+      border:1px solid #CCC;
+      border-collapse: collapse;
+      table-layout:fixed;
+      width: 100%;
+      z-index: 99999;
+      background: #fff;
+  }
+  .mtable2{
+      
+     position: fixed;
+  }
+  .mtable thead tr th{
+      font-weight: normal !important;
+      font-size: 1.3rem !important;
+  }
+  .mtable td,.mtable th{border:1px solid #CCC; text-align: center; vertical-align: middle;}
+  /*第一行黑线*/
+  #tbody td:nth-child(1){
+      border-right:1px solid #000;
+  }
+  thead td:nth-child(0){
+      border-right:1px solid #000;
+  }
+  thead th:nth-child(1){
+      border-right:1px solid #000;
+  }
+  /*第一行黑线*/
+  #tbody td:nth-child(4){
+      border-right:1px solid #000;
+  }
+  thead td:nth-child(3){
+      border-right:1px solid #000;
+  }
+  thead th:nth-child(2){
+      border-right:1px solid #000;
+  }
+   /*第二行黑线*/
+  #tbody td:nth-child(10){
+      border-right:1px solid #000;
+  }
+  thead td:nth-child(9){
+      border-right:1px solid #000;
+  }
+  thead th:nth-child(3){
+      border-right:1px solid #000;
+  }
+    /*第三行黑线*/
+    #tbody td:nth-child(26){
+      border-right:1px solid #000;
+  }
+  thead td:nth-child(25){
+      border-right:1px solid #000;
+  }
+  thead th:nth-child(4){
+      border-right:1px solid #000;
+  }
+    /*第四行黑线*/
+    #tbody td:nth-child(30){
+      border-right:1px solid #000;
+  }
+ 
+  thead th:nth-child(8){
+      border-right:1px solid #000;
+  }
+  body th{
+      font-size: 1.5rem;
+      
+  }
+  body td{
+      font-size: 1.4rem;
+
+  }
+  #tbody tr td:nth-child(1){
+      color: #000 !important; 
+      font-weight: normal;
+  }
+  #tbody tr td{
+      font-weight: bold;
+      font-size: 1.5rem;
+      overflow: hidden;
+  }
+
+#svg{
+    position:absolute;
+    left:0;
+    top:0px;
+    z-index: 10000;
+}
