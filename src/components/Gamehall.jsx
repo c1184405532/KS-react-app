@@ -1,15 +1,16 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import Info from './Info';
+import myinfo from './info/myinfo';
+import Openprizenumber from './list/Openprizenumber';
 import Ksheader from './Ksheader';
 import Kslist from './list/kslist';
-
+import Ksfooter from './Ksfooter';
 import arrow from '../style/images/arrow.png';
-import ksoption from '../style/images/ksoption.png';
 import optionrighticon from '../style/images/option-right-icon.png';
 import wfremoveimg from '../style/images/wdwf-remove.png'
 import addimg from '../style/images/jiahao.png';
-import reduceimg from '../style/images/jianhao.png'
+import reduceimg from '../style/images/jianhao.png';
+import PrivateRoute from './author/PrivateRoute';
 var myDate = new Date();
 var year = myDate.getFullYear();//获取当前年
 var yue = myDate.getMonth()+1;//获取当前月
@@ -24,26 +25,11 @@ if(mydate<10){
 class Gamehall extends Component{
     constructor(props){
         super();
-        this.openprize = this.openprize.bind(this); 
         //自定义数据
         this.state = {
-            //提示内容初始化
-            Infocontent:'',
-            //是否显示提示框
-            Infoshow:false,
             popups:false,   
             //快三名
             ksname:'',
-            //开奖数字 第一期默认111
-            kjnumber:[1,1,1],
-            //存放所有开奖数据 初始第一期数据 1.开奖号码 2 开奖时间 3 开奖期数
-            kjmsg:[[[1,1,1],[year,yue,mydate],1]],
-            //时间
-            time:[year,yue,mydate],
-            //期数
-            qishu:1,
-            //倒计时时间
-            Countdown:10,
             //玩法添加框状态 默认隐藏
             addwf:false,
             //定义玩法
@@ -68,50 +54,17 @@ class Gamehall extends Component{
             betsnum:0,
             //玩法模式存储及选择的下注数字
             prizeaggregatearr:['和值直选'],
+            time:[year,yue,mydate],
+            //期数
+            qishu:1,
         }
     };
     //每隔多少时间 出现新的中奖号码
     componentDidMount(){
         //当组件挂载完之后设置我的玩法高度自适应
-        document.getElementById('xz-box').style.height=document.body.clientHeight-315+'px'
-        //this作用域不同 先赋值
-        var _this = this;  
-            
-        this.gamehalltimeID = setInterval(function(){
-            //每次进入定时器 重新赋值给倒计时
-            _this.setState({
-                Countdown:_this.state.Countdown-1
-            })
-            //当倒计时小于10秒时 拼接一个0在前面
-            if(_this.state.Countdown<10){
-                _this.setState({
-                    Countdown:'0'+_this.state.Countdown
-                })
-            }
-            //当倒计时归零时 调用函数出新一期开奖号码 并初始化倒计时
-            if(_this.state.Countdown<=0){
-                _this.openprize();
-                _this.setState({
-                    Countdown:10
-                })
-            }
-        },1000)
-        
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.gamehalltimeID)   
-    }
-    //生成随机数 开奖号码
-    openprize(){
-        this.setState({
-            kjnumber:[Math.floor(Math.random()*6 + 1),Math.floor(Math.random()*6 + 1),Math.floor(Math.random()*6 + 1)],
-            time:[year,yue,mydate],
-            qishu:this.state.qishu+1,
-        })
-        //把所有出现的开奖号码期数存贮在数组里 
-        this.state.kjmsg.unshift([this.state.kjnumber,this.state.time,this.state.qishu]);   
-        //console.log(this.state.kjmsg)
+        document.getElementById('xz-box').style.height=document.body.clientHeight-315+'px' 
+        //路由拦截 
+        PrivateRoute(this.props.history);
     }
     //点击显示隐藏下注框
     KSshow(e){
@@ -155,6 +108,7 @@ class Gamehall extends Component{
     };
     //点击显示玩法框
     wfBOXshow(){
+        console.log(111)
         this.setState({
             //状态取反 显示还是隐藏
             addwf:!this.state.addwf,
@@ -174,59 +128,26 @@ class Gamehall extends Component{
     //点击添加玩法到我的玩法里面
     addwf(key,e){
         var addwfname = e.target.innerText;
-        var _this1 = this;
         //console.log(this.state.wdwf)
         //玩法上限为9个
         if(this.state.wdwf.length>=9){
-            //防止多次点击定时器累加
-            clearTimeout(this.timeID);
-            this.setState({
-                //显示提示框 并且赋予提示内容
-                Infoshow:true,
-                Infocontent:'玩法上限最多九个'
-            },()=>{
-                //定时器 定时隐藏提示框 清空内容
-                this.timeID = setTimeout(function(){
-                    _this1.setState({
-                        Infoshow:false,
-                        Infocontent:''
-                    })  
-                },1800)
-            })
+            myinfo('玩法上限最多九个')
             return false;
         }
         //禁止添加相同玩法
         for(var i=0;i<this.state.wdwf.length;i++){
-            
             if(this.state.wdwf[i] === e.target.innerText){  
-                //防止多次点击 定时器累加
-                clearTimeout(this.timeID);
-                this.setState({
-                    //显示提示框 并且赋予提示内容
-                    Infoshow:true,
-                    Infocontent:'禁止添加相同玩法'
-                },()=>{
-                    this.timeID = setTimeout(function(){
-                        _this1.setState({
-                            Infoshow:false,
-                            Infocontent:''
-                        }) 
-                    },1800)
-                })
+                myinfo('禁止添加相同玩法')
                 return false;
                 
             };
         }
-        
-        
         this.setState((preState)=>({
             wdwf:preState.wdwf.concat(addwfname),
         }),()=>{
             //回调 因为setState是异步的
             //console.log('wdwf: '+this.state.wdwf)
-        })
-        
-        
+        })  
     }   
     
     //编辑选中的玩法
@@ -242,24 +163,8 @@ class Gamehall extends Component{
     }
     //移除当前选中的玩法
     wdwfRemove(arr,key,e){
-
         if(this.state.wdwf.length<=2){
-            //防止多次点击 定时器累加
-            clearTimeout(this.timeID);
-            var _this1 = this;
-            this.setState({
-                //显示提示框 并且赋予提示内容
-                Infoshow:true,
-                Infocontent:'至少需要两个玩法，无法删除'
-            },()=>{
-                //定时器 定时隐藏提示框 清空内容
-                this.timeID = setTimeout(function(){
-                    _this1.setState({
-                        Infoshow:false,
-                        Infocontent:''
-                    })  
-                },1800)
-            })
+            myinfo('至少需要两个玩法，无法删除')
             return false;
         }
         //console.log(key)
@@ -717,6 +622,13 @@ class Gamehall extends Component{
             '金额合计：'+this.state.betsnum*2*this.state.multiple+'元'
         )
     }
+    //因为父组件要用到下注的期数 所以把时间和期数传递过去 然后在子组件调用 从而实现改变
+    timeNumber(){
+        this.setState({
+            time:this.state.time,
+            qishu:this.state.qishu+1,
+        })
+    }
     render(){
         //顶部导航栏列表
         const rollList = ['彩票大厅','外盘彩','真人娱乐','电子游艺','体育博弈'];
@@ -725,54 +637,16 @@ class Gamehall extends Component{
             <div >
                 {/*头组件*/}
                 <Ksheader title="游戏大厅" rollList={rollList}/>
-                {/*提示组件*/}
-                <Info content={this.state.Infocontent} time={this.state.Infotime} type={this.state.Infoshow}/>
                 {/*中间内容快三列表组件*/}
                 <Kslist KSshow={this.KSshow.bind(this)}/>
-                <div className={'ksbox'} id={this.state.popups?"KsBOXshow":"ksBOX"} >
-                    <div className="ks-top">
-                        <img src={arrow} alt="" className="icon-left" onClick={this.KSshow.bind(this)}/>
-                        <span id="ksname">{this.state.ksname}</span>
-                        <img src={ksoption} alt="" className="icon-right"/>
-                    </div>
-                    {/*期数*/}
-                    <div className="ks-qs-box">
-                        <div className="qs-head">
-                            <div className="qs-text-left">
-                            开奖：{this.state.time[0]}-
-                            {this.state.time[1]}-
-                            {this.state.time[2]}-
-                            {this.state.qishu}
-                            期
-                            </div>
-                            <div className="qs-text-right">
-                                <span className="winning-numbers">{this.state.kjnumber[0]}</span>
-                                <span className="winning-numbers">{this.state.kjnumber[1]}</span>
-                                <span className="winning-numbers">{this.state.kjnumber[2]}</span>
-                            </div>
-                        </div>
-                        {/*期数列表*/}
-                        <div className="qs-content">
-                            {/*循环*/}
-                            {
-                                this.state.kjmsg.map((msg,key)=>(
-                                    <div className="qs-content-list" key={key}>
-                                        <div className="qs-content-left">第{msg[2]}期</div>
-                                        <div className="qs-content-right">
-                                            <span className="gwqs-numbers">{msg[0][0]}</span>
-                                            <span className="gwqs-numbers">{msg[0][1]}</span>
-                                            <span className="gwqs-numbers">{msg[0][2]}</span>
-                                        </div>
-                                    </div>
-                                ))
-                            } 
-                        </div>
-            
-                        <div className="qs-footer">
-                            <div className="qs-footer-left">距离第{this.state.qishu+1}期开奖：<span className="qsft-color">00：{this.state.Countdown}</span></div>
-                            <div className="qs-footer-right">玩法奖金：5.7500-160.000元</div>
-                        </div>
-                    </div>
+                <div className={'ksbox'} id={this.state.popups?"KsBOXshow":"ksBOX"}>
+                    {/*快三开奖期号和数字*/}
+                    <Openprizenumber 
+                        KSshow={this.KSshow.bind(this)} 
+                        timeNumber={this.timeNumber.bind(this)}
+                        time={this.state.time}
+                        qishu={this.state.qishu}
+                    />
                     {/*下注主体*/}
                     <div className="xz-box" id="xz-box">
                         {/*下注选项列表*/}
@@ -789,7 +663,7 @@ class Gamehall extends Component{
                                 )) 
                             }
                         </div>
-                        {/*下注号码选择*/}
+                        {/*下注 号码选择*/}
                         <div className="xz-number-list">
                             {this.numberShow(this.state.wftype)}
                         </div>
@@ -805,7 +679,7 @@ class Gamehall extends Component{
                                         <span>倍</span>
                                     </div>
                                     <img src={reduceimg} alt="" className="jia-img" onClick={this.multipleSelect.bind(this,'reduse')}/>
-                                </div>
+                                </div> 
                                 <div className="danwei-box">
                                     <div className="danwei-list danweiActive">元</div>
                                     <div className="danwei-list">角</div>
@@ -892,7 +766,7 @@ class Gamehall extends Component{
                         </div>
                     </div>
                 </div>
-              
+                <Ksfooter index={0}/>        
             </div>
             
         );

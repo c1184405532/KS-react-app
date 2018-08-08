@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import Backgroundimg from '../style/images/index-bg2.jpg';
+import Backgroundimg from '../../style/images/index-bg2.jpg';
 class Background extends Component {
     render(){
         return(

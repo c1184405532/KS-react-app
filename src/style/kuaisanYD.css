@@ -205,7 +205,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     width: 100%;
     height: 60px;
     background: #fff;
-    z-index: 5;
+    z-index: 4;
 }
 .footer-list{
     float: left;
@@ -418,10 +418,10 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     background: #EEEEEE;
 }
 .qs-content-list-2:last-child{
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 .qs-content-list:last-child{
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 .qs-content-left{
     float: left;
@@ -445,7 +445,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     bottom: 0;
     width: 100%;
     left: 0;
-    height: 25px;
+    height: 40px;
     background:#fff;
 }
 .qsft-color{
@@ -458,7 +458,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     margin-left: 2%;
     color: #7D7D7D;
     font-size: 1.3rem;
-    line-height: 24px
+    line-height: 40px
 }
 .qs-footer-right{
     float: right;
@@ -466,7 +466,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     margin-right: 2%;
     color: #7D7D7D;
     font-size: 1.2rem;
-    line-height: 24px;
+    line-height: 40px;
 }
 .xz-box{
     float: left;

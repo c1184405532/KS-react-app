@@ -1,10 +1,15 @@
 import React,{Component} from 'react';
 import Ksheader from './Ksheader';
+import Ksfooter from './Ksfooter';
+import PrivateRoute from './author/PrivateRoute';
 class Charttrend extends Component{
     constructor(props){
         super();
     }
     componentDidMount(){
+        //路由拦截 
+        PrivateRoute(this.props.history);
+        //画图
         var svg = document.getElementById("svg");
         var tbody = document.getElementById("tbody");
         svg.innerHTML = "";
@@ -305,7 +310,8 @@ class Charttrend extends Component{
                         </tbody>
                     </table>
                 </div>
-            </div>   
+            </div> 
+            <Ksfooter index={2}/>
         </div>
 
         )

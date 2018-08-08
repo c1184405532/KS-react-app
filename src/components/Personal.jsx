@@ -1,48 +1,36 @@
 import React,{Component} from 'react';
-import Info from './Info';
+import myinfo from './info/myinfo';
+import Ksfooter from './Ksfooter';
 import tixian from '../style/images/tixian.png';
 import chongzhi from '../style/images/chongzhi.png';
 import zhuangzhan from '../style/images/zhuangzhan.png';
+import PrivateRoute from './author/PrivateRoute';
 class Personal extends Component{
-    constructor(){
-        super();
-        this.state = {
-            Infocontent:null,
-            Infotime:1800,
-            Infoshow:false
-        }
-    }
     handleClick(content){
-        var _this = this;
-        //防止多次点击定时器累加
-        clearTimeout(this.timeID)
-        this.setState({
-            Infocontent:content+'接口暂未开放',
-            Infotime:1800,
-            Infoshow:true
-        },()=>{
-            this.timeID = setTimeout(function(){
-                _this.setState({
-                    Infocontent:null,
-                    Infoshow:false
-                })
-            },1800)
-        })
+        myinfo(content+'接口暂未开放')
+    }
+    componentDidMount(){
+        //路由拦截 
+        PrivateRoute(this.props.history);
+    }
+    signOut(){
+        sessionStorage.clear('isLogin');
+        myinfo('已退出',2500);
+        this.props.history.push('/');
     }
     render(){
         const listName = ['充值','取款','转账']
         const listImg = [chongzhi,tixian,zhuangzhan];
         return(
             <div>
-                 {/*提示组件*/}
-                 <Info content={this.state.Infocontent} time={this.state.Infotime} type={this.state.Infoshow}/>
                 <div className="title-head" style={{height: "60px"}}>
                     <div className="title-text">个人中心</div>
                 </div>
                 {/*个人中心内容*/}
                 <div className="gr-content">
-                    <div className="user-nicheng">昵称：<span className="user-nicheng-style">datou1989</span></div>
-                    <div className="user-name">用户名：<span className="user-name-style">datou1989</span></div>
+                    <div className="user-nicheng">昵称：<span className="user-nicheng-style">{sessionStorage.userName}</span></div>
+                    <div className="user-name">用户名：<span className="user-name-style">{sessionStorage.userName}</span></div>
+                    <button className="sign-out" onClick={this.signOut.bind(this)}>退出账号</button>
                     <div className="rmb-box">
                         <div className="rmb-list">
                             <span className="rmb-text">人民币余额</span>
@@ -67,6 +55,7 @@ class Personal extends Component{
                         }
                     </div>
                 </div>
+                <Ksfooter index={3}/>
             </div>
         )
     }
