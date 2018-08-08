@@ -1,11 +1,12 @@
-
+import myinfo from '../info/myinfo';
 //由于存储的数据会转换成字符串类型
 function PrivateRoute(history){
     let isLogin = sessionStorage.getItem('isLogin');
     if(isLogin ===  'true'){
         
     }else{
-        history.push('/')
+        history.push('/');
+        myinfo('请先登陆');
     }
 }
 /*

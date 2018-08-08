@@ -8,7 +8,7 @@ class App extends Component {
     }
     componentDidMount(){
         //设置高度
-        document.getElementsByTagName('html')[0].style.minHeight = window.screen.height+'px';
+        document.getElementsByTagName('html')[0].style.height = window.screen.height+'px';
     }
     render() {
         return (

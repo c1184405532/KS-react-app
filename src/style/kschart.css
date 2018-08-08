@@ -1,8 +1,9 @@
 .mdiv{
     width: 100%;
-      margin:auto;
+      overflow: auto;
       position: relative;
       height: 100%;
+      float: left;
   }
   .mdiv th{
       font-size: 10px !important;
@@ -25,6 +26,7 @@
       width: 100%;
       z-index: 99999;
       background: #fff;
+      float: left;
   }
   .mtable2{
       

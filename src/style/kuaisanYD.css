@@ -1019,6 +1019,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     color: #7D7D7D;
     margin-left: 8%;
     min-width: 70%;
+    font-size: 1.3rem;
 }
 .sywf-r-l-style{
     float: left;
