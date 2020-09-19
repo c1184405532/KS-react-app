@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
     Route,
-    HashRouter,Redirect,Switch
+    HashRouter,Switch,Redirect
   } from 'react-router-dom';
 import './index.css';
 import App from './App';
@@ -17,9 +17,11 @@ import Page404 from './components/404/Page404';
 import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render( 
         (<HashRouter>
-            <App>
+             <Route path="/" component={App} />
+             
+                {/*
                 <Switch>
-                    <Route exact path="/" component={Login} />
+                    
                     <Route path="/register" component={Register} />
                     <Route path="/forgot" component={Forgot}/>
                     <Route path="/home" component={Gamehall} />
@@ -28,7 +30,8 @@ ReactDOM.render(
                     <Route path="/personal" component={Personal}/>
                     <Route component={Page404} />
                 </Switch>
-            </App>
+                */}
+            
         </HashRouter>),
     document.getElementById('root')
 );

@@ -198,19 +198,56 @@ class Login extends Component {
                                 记住密码
                             </div>
                             <button className="button-login" onClick={this.handleclickLogin.bind(this)}>登录</button>
-                            <div className="login-footer">
-                                <div className="text-list">
-                                    还没有帐号，<Link to={'/register'}>去注册</Link>
-                                </div>
-                                <div className="text-list text-right">
-                                    <Link to={'/forgot'}>忘记密码?</Link>
-                                </div>
-                            </div>  
+                            <Falist data={[1,2,3,4,5,6]}  row={this.row}/>
                         </div>
                     </div>
                 <Footer/>  
             </div>
         )
     }
+    row = (arr) =>{
+        return <div>{arr}</div>
+    }
 }
 export default Login;
+class Falist extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            arr:[],
+            Basicdata:[]
+        }
+    }
+
+    componentDidMount(){
+        this.props.row(this.props.data);
+        /*reqwest({
+            url: 'https://test.leeonedu.com/Admin/Index/getBasicData',
+            type: 'json',
+            method: 'get',
+            contentType: 'application/json',
+            success: (res) => {
+             console.log(res)
+            },
+          });*/
+          /*fetch('https://test.leeonedu.com/Admin/Index/getBasicData')
+          .then(function(response) {
+            return response.text()            　　// 将内容将化成字符串类型数据
+          }).then(function(body) {
+            console.log(body)
+          })*/
+    }
+    render(){
+        return (
+            <div className="login-footer">
+                <div className="text-list">
+                    还没有帐号，<Link to={'/register'}>去注册</Link>
+                </div>
+                <div className="text-list text-right">
+                    {this.props.row(this.props.data)}
+                    <Link to={'/forgot'}>忘记密码?</Link>
+                </div>
+            </div>  
+        )
+    }
+}
